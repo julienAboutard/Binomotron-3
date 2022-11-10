@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Apprenant, Brief, Groupe
 
-# Register your models here.
+admin.site.register(Apprenant)
+admin.site.register(Brief)
+admin.site.register(Groupe)
+
