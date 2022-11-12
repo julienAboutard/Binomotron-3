@@ -6,9 +6,11 @@ from django.utils import timezone
 
 from .models import Apprenant, Brief, Groupe
 
+def index(request) :
+    return render(request, 'other/index.html')
 
 class ApprenantView(generic.ListView):
-    template_name = 'polls/apprenant.html'
+    template_name = 'apprenant/apprenant.html'
     context_object_name = 'latest_apprenant_list'
 
     def get_queryset(self):
