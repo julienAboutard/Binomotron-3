@@ -14,5 +14,13 @@
         "prenom": "Paul",
         "nom": "McCartney"
       }
+    },
+    {
+      "model": "binomotron.apprenant",
+      "pk": 3,
+      "fields": {
+        "prenom": "Alphonse",
+        "nom": "Zim"
+      }
     }
   ]

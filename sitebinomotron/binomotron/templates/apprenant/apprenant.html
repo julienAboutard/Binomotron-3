@@ -8,12 +8,21 @@
   </head>
   <body>
     <p>This is my page</p>
-    <form><button formaction="{% url 'binomotron:index' %}">Ajouter</button></form>
+    <form action=" {% url 'binomotron:apprenant'%}" method="post">
+      {% csrf_token %}
+      <input placeholder="nom" name="search">
+      <button type="submit">Recherche</button>
+    </form>
+    <form>
+      {% csrf_token %}
+      <button formaction="{% url 'binomotron:index' %}">Ajouter</button>
+    </form>
     {% if apprenant_list %}
       <ul>
       {% for apprenant in apprenant_list %}
         <li>
           <form >
+            {% csrf_token %}
             <a href="{% url 'binomotron:detail' apprenant.id %}">{{ apprenant.nom }} {{ apprenant.prenom }}</a>
             <button formaction="{% url 'binomotron:index' %}">Modifier</button>
             <button formaction="{% url 'binomotron:index' %}">Supprimer</button>

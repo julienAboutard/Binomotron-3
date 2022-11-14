@@ -13,12 +13,22 @@ class ApprenantView(generic.ListView):
     template_name = 'apprenant/apprenant.html'
     context_object_name = 'apprenant_list'
 
+    def post(self, request):  # ***** this method required! ******
+        self.object_list = self.get_queryset() 
+        return HttpResponseRedirect(reverse('binomotron:apprenant'))
+
     def get_queryset(self):
         """
         Return the last five added apprenants (not including those set to be
         published in the future).
         """
-        return Apprenant.objects.order_by('nom')
+
+        if self.request.method == "GET" :
+            return Apprenant.objects.order_by('nom').all()
+        
+        elif self.request.method == "POST" : 
+            # return Apprenant.objects.filter(nom__exact = self.request.POST.get('search')).all()
+            return Apprenant.objects.order_by('prenom').all()
     
 class ApprenantDetailView(generic.DetailView):
     model = Apprenant
