@@ -1,0 +1,18 @@
+[
+    {
+      "model": "binomotron.apprenant",
+      "pk": 1,
+      "fields": {
+        "prenom": "John",
+        "nom": "Lennon"
+      }
+    },
+    {
+      "model": "binomotron.apprenant",
+      "pk": 2,
+      "fields": {
+        "prenom": "Paul",
+        "nom": "McCartney"
+      }
+    }
+  ]
