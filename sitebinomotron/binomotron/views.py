@@ -39,7 +39,7 @@ class ApprenantEditClass(SuccessMessageMixin, UpdateView):
 
 class ApprenantDetailView(generic.DetailView):
     model = Apprenant
-    template_name = 'apprenant/detail.html'
+    template_name = 'apprenant/apprenant_detail.html'
 
 
 class ApprenantDeleteView(SuccessMessageMixin, DeleteView):
@@ -48,8 +48,48 @@ class ApprenantDeleteView(SuccessMessageMixin, DeleteView):
     # url de redirection
     success_url ="/apprenant"
     success_message = "Éliminé avec succès! AU SUIVANT!!!" 
-    template_name = "apprenant/deleteconfirmation.html"
+    template_name = "apprenant/apprenant_deleteconfirmation.html"
 
+# Partie Brief
+
+def briefview(request) :
+    if request.method == 'GET' :
+        brief_list = Brief.objects.all().order_by('nom')
+        return render(request, 'brief/brief.html', {'brief_list' : brief_list})
+    elif request.method ==  'POST' :
+        brief_list = Brief.objects.all().filter(nom=request.POST.get('search'))
+        return render(request, 'brief/brief.html', {'brief_list' : brief_list})
+
+class BriefAddClass(SuccessMessageMixin, CreateView):
+    model = Brief
+    template_name = "brief/brief_add.html"
+    fields = ['nom', 'lien', 'nombre']
+    
+    success_message = "%(nom)s ajouté avec succès!"
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('binomotron:brief')
+    
+class BriefEditClass(SuccessMessageMixin, UpdateView):
+    model = Brief
+    fields = ['nom', 'lien', 'nombre']
+    template_name = "brief/brief_edit.html"
+    
+    success_message = "%(nom)s modifié avec succès!"
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('binomotron:brief')
+
+class BriefDetailView(generic.DetailView):
+    model = Brief
+    template_name = 'brief/brief_detail.html'
+
+
+class BriefDeleteView(SuccessMessageMixin, DeleteView):
+    model = Brief
+     
+    # url de redirection
+    success_url ="/brief"
+    success_message = "Éliminé avec succès! AU SUIVANT!!!" 
+    template_name = "brief/brief_deleteconfirmation.html"
 
 # Essaie de faire une view pour la liste d'apprenant sous forme de classe héritant de ListView
 # class ApprenantView(generic.ListView):

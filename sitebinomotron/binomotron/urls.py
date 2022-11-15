@@ -5,18 +5,20 @@ from . import views
 app_name = 'binomotron'
 
 urlpatterns = [
-    # path('', views.IndexView.as_view(), name='index'),
-    # path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-    # path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
-    # path('<int:question_id>/vote/', views.vote, name='vote'),
 
     path('', views.index, name='index'),
-    # path('apprenant/', views.ApprenantView.as_view(), name='apprenant'),
+
     path('apprenant/', views.apprenantview, name='apprenant'),
     path('apprenant/add/', views.ApprenantAddClass.as_view(), name = 'apprenant_add'),
     path('apprenant/edit/<int:pk>/', views.ApprenantEditClass.as_view(), name = 'apprenant_edit'),
-    path('apprenant/<int:pk>/', views.ApprenantDetailView.as_view(), name='detail'),
-    path('supprimer/<pk>/', views.ApprenantDeleteView.as_view(), name="supprimer-apprenant"),
+    path('apprenant/<int:pk>/', views.ApprenantDetailView.as_view(), name='apprenant_detail'),
+    path('apprenant/supprimer/<pk>/', views.ApprenantDeleteView.as_view(), name="supprimer-apprenant"),
+
+    path('brief/', views.briefview, name='brief'),
+    path('brief/add/', views.BriefAddClass.as_view(), name = 'brief_add'),
+    path('brief/edit/<int:pk>/', views.BriefEditClass.as_view(), name = 'brief_edit'),
+    path('brief/<int:pk>/', views.BriefDetailView.as_view(), name='brief_detail'),
+    path('brief/supprimer/<pk>/', views.BriefDeleteView.as_view(), name="supprimer-brief"),
 
 
 ]

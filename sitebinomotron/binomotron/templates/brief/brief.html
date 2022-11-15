@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'binomotron/style.css' %}">
+  <head>
+    <meta charset="utf-8" />
+    <title>Binomotron Brief</title>
+  </head>
+  <body>
+    <p>Liste des Briefs</p>
+    <form action=" {% url 'binomotron:brief'%}" method="post">
+      {% csrf_token %}
+      <input placeholder="nom" name="search">
+      <button type="submit">Recherche</button>
+    </form>
+    <form><button class='add-btn' formaction="{% url 'binomotron:brief_add' %}">Ajouter</button></form>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="text-center alert alert-{{ message.tags }}">
+            {{ message|safe }}
+        </div>
+    {% endfor %}
+  {% endif %}
+
+    {% if brief_list %}
+      <ul>
+      {% for brief in brief_list %}
+        <li>
+          <form >
+            {% csrf_token %}
+            <a href="{% url 'binomotron:brief_detail' brief.id %}">{{ brief.nom }}</a>
+            <button class ='modif-btn' formaction="{% url 'binomotron:brief_edit' brief.id %}">Modifier</button>
+            <button class = "delete-btn" formaction="{% url 'binomotron:supprimer-brief' brief.id%}">Supprimer</button>
+          </form>
+        </li>
+      {% endfor %}
+      </ul>
+      {% else %}
+        <p>Pas de briefs disponibles</p>
+      {% endif %}
+  </body>
+</html>

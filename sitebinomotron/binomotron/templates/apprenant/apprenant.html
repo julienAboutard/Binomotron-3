@@ -28,7 +28,7 @@
         <li>
           <form >
             {% csrf_token %}
-            <a href="{% url 'binomotron:detail' apprenant.id %}">{{ apprenant.nom }} {{ apprenant.prenom }}</a>
+            <a href="{% url 'binomotron:apprenant_detail' apprenant.id %}">{{ apprenant.nom }} {{ apprenant.prenom }}</a>
             <button class ='modif-btn' formaction="{% url 'binomotron:apprenant_edit' apprenant.id %}">Modifier</button>
             <button class = "delete-btn" formaction="{% url 'binomotron:supprimer-apprenant' apprenant.id%}">Supprimer</button>
           </form>
@@ -36,7 +36,7 @@
       {% endfor %}
       </ul>
       {% else %}
-        <p>No polls are available.</p>
+        <p>Pas d'apprenants disponibles</p>
       {% endif %}
   </body>
 </html>
