@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Formulaire de modification d'apprenants</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static '/style.css' %}"> -->
+  </head>
+  <body>
+    <h1>Modification d'un apprenant</h1>
+    {% block content %}
+      {% if form %}
+        {% for field in form %}
+         {{ field.errors }}
+        {% endfor %}
+      {% endif %}
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" value="Update">
+      </form>
+    {% endblock content %}
+  </body>
+</html>
+

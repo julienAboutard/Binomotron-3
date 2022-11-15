@@ -1,0 +1,11 @@
+<!-- ici page de confirmation -->
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'binomotron/style.css' %}">
+
+
+<form method="post">{% csrf_token %}
+    <p>Êtes-vous sûr de vouloir supprimer "{{ object }} "?</p>
+    <input class = "back-btn" type="button" value="Annuler" onclick="history.back()"> 
+    <input class = "confirm-btn" type="submit" value="Confirmer">
+</form>

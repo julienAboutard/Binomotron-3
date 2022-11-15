@@ -6,7 +6,7 @@ class Apprenant(models.Model):
     # pub_date = models.DateTimeField('date published')
 
     def __str__(self):
-        return f"{self.nom} {self.prenom} ajouté {self.pub_date}"
+        return f"{self.nom} {self.prenom}"
 
 class Brief(models.Model):
     nom = models.CharField(max_length=200)
