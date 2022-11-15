@@ -1,1 +1,20 @@
-<p>{{brief.nom}} {{brief.lien}} {{brief.number}}</p>
+<h1>{{brief.nom}} {{brief.lien}}</h1>
+
+{% if group_list %}
+    <ul>
+    {% for gname, students in group_list.items %}
+    <li>
+        <p>{{gname}}</p>
+        {% for student in students %}
+        <ul>
+            <li>
+                <p>{{student.nom}} {{student.prenom}}</p>
+            </li>
+        </ul>
+        {% endfor %}   
+    </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>Pas de briefs disponibles</p>
+    {% endif %}

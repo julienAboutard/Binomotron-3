@@ -81,6 +81,18 @@ class BriefEditClass(SuccessMessageMixin, UpdateView):
 class BriefDetailView(generic.DetailView):
     model = Brief
     template_name = 'brief/brief_detail.html'
+    
+    def get_context_data(self, **kwargs) :
+        pk = self.get_object()
+        context = super().get_context_data(**kwargs)
+        groups = Groupe.objects.filter(brief = pk)
+        group_list = {}
+
+        for group in groups :
+            student = group.apprenants.select_related()
+            group_list[group.nom] =student
+        context['group_list'] = group_list
+        return context
 
 
 class BriefDeleteView(SuccessMessageMixin, DeleteView):
