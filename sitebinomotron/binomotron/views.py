@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.utils import timezone
@@ -107,4 +107,4 @@ class BriefDeleteView(SuccessMessageMixin, DeleteView):
 
 def groupecreate(request, pk) :
     groupe_create(pk)
-    return HttpResponseRedirect(reverse('binomotron:brief_detail'))
+    return redirect('/brief/%d'% pk)
