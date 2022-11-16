@@ -17,7 +17,7 @@ def apprenantview(request) :
         apprenant_list = Apprenant.objects.all().order_by('nom')
         return render(request, 'apprenant/apprenant.html', {'apprenant_list' : apprenant_list})
     elif request.method ==  'POST' :
-        apprenant_list = Apprenant.objects.all().filter(nom=request.POST.get('search'))
+        apprenant_list = Apprenant.objects.all().filter(nom__icontains=request.POST.get('search'))
         return render(request, 'apprenant/apprenant.html', {'apprenant_list' : apprenant_list})
 
 class ApprenantAddClass(SuccessMessageMixin, CreateView):
@@ -58,7 +58,7 @@ def briefview(request) :
         brief_list = Brief.objects.all().order_by('nom')
         return render(request, 'brief/brief.html', {'brief_list' : brief_list})
     elif request.method ==  'POST' :
-        brief_list = Brief.objects.all().filter(nom=request.POST.get('search'))
+        brief_list = Brief.objects.all().filter(nom__icontains=request.POST.get('search'))
         return render(request, 'brief/brief.html', {'brief_list' : brief_list})
 
 class BriefAddClass(SuccessMessageMixin, CreateView):
