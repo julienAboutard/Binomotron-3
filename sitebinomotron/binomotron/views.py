@@ -72,12 +72,31 @@ class BriefAddClass(SuccessMessageMixin, CreateView):
     
 class BriefEditClass(SuccessMessageMixin, UpdateView):
     model = Brief
+
     fields = ['nom', 'lien', 'nombre']
     template_name = "brief/brief_edit.html"
     
     success_message = "%(nom)s modifié avec succès!"
+
     def get_success_url(self, **kwargs):
         return reverse_lazy('binomotron:brief')
+
+    def get_context_data(self, **kwargs):
+        pk = self.get_object()
+        context = super().get_context_data(**kwargs)
+        brief = Brief.objects.get(pk = pk.pk)
+
+        context['ancien_nombre'] = brief.nombre
+        return context
+    
+    def post(self, request, *args: str, **kwargs):
+        form_nb_appr = request.POST["ancien_nombre"]
+        current_brief = self.get_object()
+        previous_nombre = current_brief.nombre
+        if previous_nombre != form_nb_appr:
+            Groupe.objects.filter(brief = current_brief.pk).delete()
+
+        return super().post(request, *args, **kwargs)
 
 class BriefDetailView(generic.DetailView):
     model = Brief
@@ -87,6 +106,7 @@ class BriefDetailView(generic.DetailView):
         pk = self.get_object()
         context = super().get_context_data(**kwargs)
         groups = Groupe.objects.filter(brief = pk)
+                
         group_list = {}
 
         for group in groups :
@@ -108,3 +128,6 @@ class BriefDeleteView(SuccessMessageMixin, DeleteView):
 def groupecreate(request, pk) :
     groupe_create(pk)
     return redirect('/brief/%d'% pk)
+
+
+
