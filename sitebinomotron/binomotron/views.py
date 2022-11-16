@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
-from .group_crea import binomotron
+from .group_crea import groupe_create
 
 from .models import Apprenant, Brief, Groupe
 
@@ -106,5 +106,5 @@ class BriefDeleteView(SuccessMessageMixin, DeleteView):
 
 
 def groupecreate(request, pk) :
-    binomotron(pk)
-    return HttpResponseRedirect(reverse("'binomotron:brief_detail' brief_id"))
+    groupe_create(pk)
+    return HttpResponseRedirect(reverse('binomotron:brief'))
