@@ -20,5 +20,7 @@ urlpatterns = [
     path('brief/<int:pk>/', views.BriefDetailView.as_view(), name='brief_detail'),
     path('brief/supprimer/<pk>/', views.BriefDeleteView.as_view(), name="supprimer-brief"),
 
+    path('groupe/create/<int:pk>', views.groupecreate , name ='groupe_create')
+
 
 ]

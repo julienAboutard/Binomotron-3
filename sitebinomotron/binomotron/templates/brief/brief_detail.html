@@ -16,5 +16,9 @@
     {% endfor %}
     </ul>
     {% else %}
-    <p>Pas de briefs disponibles</p>
+    <p>Pas de groupes créer pour le brief {{brief.nom}}</p>
+    <form>
+        {% csrf_token %}
+        <button class ='create-btn' formaction="{% url 'binomotron:groupe_create' brief.id %}">Créer groupes</button>
+    </form>
     {% endif %}

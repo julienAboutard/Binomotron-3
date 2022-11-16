@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
+from .group_crea import binomotron
 
 from .models import Apprenant, Brief, Groupe
 
@@ -103,21 +104,7 @@ class BriefDeleteView(SuccessMessageMixin, DeleteView):
     success_message = "Éliminé avec succès! AU SUIVANT!!!" 
     template_name = "brief/brief_deleteconfirmation.html"
 
-# Essaie de faire une view pour la liste d'apprenant sous forme de classe héritant de ListView
-# class ApprenantView(generic.ListView):
-#     model = Apprenant
-#     template_name = 'apprenant/apprenant.html'
-#     context_object_name = 'apprenant_list'
 
-#     def post(self, request): 
-#         self.object_list = self.get_queryset() 
-#         return HttpResponseRedirect(reverse('binomotron:apprenant'))
-
-#     def get_queryset(self):
-
-#         if self.request.method == 'POST' :
-#             return Apprenant.objects.all().order_by('prenom')
-            
-#         else :
-#             return Apprenant.objects.all().order_by('nom')
-        
+def groupecreate(request, pk) :
+    binomotron(pk)
+    return HttpResponseRedirect(reverse("'binomotron:brief_detail' brief_id"))
