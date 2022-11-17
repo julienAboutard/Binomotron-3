@@ -2,15 +2,17 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <title>My test page</title>
+    <title>Page d'accueil Binomotron</title>
+    <h1> Binomotron</h1>
   </head>
   <body>
-    <p>This is my page</p>
+    <p> Pour créer des groupes et faire des heureux (ou pas) </p>
+
     <p>Que souhaitez-vous faire ?</p>
     <ul>
-        <li><a href="{% url 'binomotron:apprenant'%}">Apprenants</a></li> 
+        <li><a href="{% url 'binomotron:apprenant'%}">Apprenants</a></li>
+        
         <li><a href="{% url 'binomotron:brief'%}">Briefs</a></li> 
-        <li><a href="">Groupes</a></li> 
     </ul>
   </body>
 </html>
