@@ -37,4 +37,4 @@ Il n'est pas possible de supprimer les groupes créés, par contre si l'on modif
 - Dossier sitebinomotron (Api créer avec Django)  
 - fichier .gitignore  
 - README.md  
-- requirement.txt  
+- requirement.txt  (ensemble des packages pour faire tourner le projet)
