@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.validators import MinValueValidator 
 
 class Apprenant(models.Model):
     nom = models.CharField(max_length=200, null=True)
@@ -12,7 +13,7 @@ class Apprenant(models.Model):
 class Brief(models.Model):
     nom = models.CharField(max_length=200, null=True)
     lien = models.CharField(max_length=200, unique=True)
-    nombre = models.SmallIntegerField(default=2)
+    nombre = models.PositiveIntegerField(default=2, validators = [MinValueValidator(2)])
     date_debut = models.DateField(default = timezone.now)
     date_fin = models.DateField(default = timezone.now)
     # pub_date = models.DateTimeField('date published')
