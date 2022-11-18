@@ -13,8 +13,8 @@ class Brief(models.Model):
     nom = models.CharField(max_length=200, null=True)
     lien = models.CharField(max_length=200, unique=True)
     nombre = models.SmallIntegerField(default=2)
-    date_debut = models.DateTimeField(default = timezone.now())
-    date_fin = models.DateTimeField(default = timezone.now())
+    date_debut = models.DateField(default = timezone.now)
+    date_fin = models.DateField(default = timezone.now)
     # pub_date = models.DateTimeField('date published')
 
     def __str__(self):
