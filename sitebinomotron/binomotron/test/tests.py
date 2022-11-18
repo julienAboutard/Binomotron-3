@@ -6,6 +6,7 @@ from ..group_crea import groupe_create
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db import IntegrityError
+from django.urls import reverse
 
 
 class BriefFormModelTests(TestCase):
@@ -84,4 +85,56 @@ class GroupeCreationTests(TestCase) :
         for groupe in groupes:
             students = groupe.apprenants.select_related()
             self.assertEqual(students.count(), 2)
+
+class RedirectTestCase(TestCase) :
+
+    def setUp(self) :
+        Apprenant.objects.create(nom='Costes', prenom='Audrey')
+        Brief.objects.create(nom='Pouet', lien='http://pouet.fr', nombre=2)
+
+    def test_redirect_apprenant(self):
+        response = self.client.get(reverse('binomotron:apprenant'))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_redirect_brief(self):
+        response = self.client.get(reverse('binomotron:brief'))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_redirect_brief_detail(self): 
+        brief1 = get_object_or_404(Brief, nom='Pouet')
+        response = self.client.get(reverse('binomotron:brief_detail', args=[brief1.pk]))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_redirect_apprenant_detail(self): 
+        apprenant1 = get_object_or_404(Apprenant, prenom='Audrey')
+        response = self.client.get(reverse('binomotron:apprenant_detail', args=[apprenant1.pk]))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_redirect_brief_add(self): 
+        response = self.client.get(reverse('binomotron:brief_add'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_redirect_apprenant_add(self): 
+        response = self.client.get(reverse('binomotron:apprenant_add'))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_redirect_brief_edit(self): 
+        brief1 = get_object_or_404(Brief, nom='Pouet')
+        response = self.client.get(reverse('binomotron:brief_edit', args=[brief1.pk]))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_redirect_apprenant_edit(self): 
+        apprenant1 = get_object_or_404(Apprenant, prenom='Audrey')
+        response = self.client.get(reverse('binomotron:apprenant_edit', args=[apprenant1.pk]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_redirect_brief_supprimer(self): 
+        brief1 = get_object_or_404(Brief, nom='Pouet')
+        response = self.client.get(reverse('binomotron:supprimer-brief', args=[brief1.pk]))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_redirect_apprenant_supprimer(self): 
+        apprenant1 = get_object_or_404(Apprenant, prenom='Audrey')
+        response = self.client.get(reverse('binomotron:supprimer-apprenant', args=[apprenant1.pk]))
+        self.assertEqual(response.status_code, 200)
         
