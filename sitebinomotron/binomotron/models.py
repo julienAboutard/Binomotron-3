@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Apprenant(models.Model):
     nom = models.CharField(max_length=200)
@@ -12,6 +13,8 @@ class Brief(models.Model):
     nom = models.CharField(max_length=200)
     lien = models.CharField(max_length=200)
     nombre = models.SmallIntegerField(default=2)
+    date_debut = models.DateTimeField(default = timezone.now())
+    date_fin = models.DateTimeField(default = timezone.now())
     # pub_date = models.DateTimeField('date published')
 
     def __str__(self):

@@ -4,10 +4,10 @@
   <link rel="stylesheet" href="{% static 'binomotron/style.css' %}">
   <head>
     <meta charset="utf-8" />
-    <title>Binomotron Brief</title>
+    <title>Binomotron, liste des briefs</title>
   </head>
   <body>
-    <p>Liste des Briefs</p>
+    <p>Liste des briefs</p>
     <form action=" {% url 'binomotron:brief'%}" method="post">
       {% csrf_token %}
       <input placeholder="nom" name="search">

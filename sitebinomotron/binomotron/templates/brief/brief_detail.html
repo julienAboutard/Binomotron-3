@@ -1,4 +1,8 @@
-<h1>{{brief.nom}} {{brief.lien}}</h1>
+<h1>{{brief.nom}} </h1>
+<p> Lien vers le brief : {{brief.lien}} </p>
+<p> Date de début du projet : {{brief.date_debut}} </br>
+     Date limite de rendu : {{brief.date_fin}} </p>
+
 
 {% if group_list %}
     <ul>
@@ -8,7 +12,7 @@
         {% for student in students %}
         <ul>
             <li>
-                <p>{{student.nom}} {{student.prenom}}</p>
+                <p>{{student.prenom}} {{student.nom}}</p>
             </li>
         </ul>
         {% endfor %}   
@@ -16,9 +20,9 @@
     {% endfor %}
     </ul>
     {% else %}
-    <p>Pas de groupes créer pour le brief {{brief.nom}}</p>
+    <p>Les groupes n'ont pas encore été créés pour le brief {{brief.nom}}</p>
     <form>
         {% csrf_token %}
-        <button class ='create-btn' formaction="{% url 'binomotron:groupe_create' brief.id %}">Créer groupes</button>
+        <button class ='create-btn' formaction="{% url 'binomotron:groupe_create' brief.id %}">Créer les groupes</button>
     </form>
     {% endif %}

@@ -64,7 +64,7 @@ def briefview(request) :
 class BriefAddClass(SuccessMessageMixin, CreateView):
     model = Brief
     template_name = "brief/brief_add.html"
-    fields = ['nom', 'lien', 'nombre']
+    fields = ['nom', 'lien', 'nombre', 'date_debut', 'date_fin']
     
     success_message = "%(nom)s ajouté avec succès!"
     def get_success_url(self, **kwargs):
@@ -73,7 +73,7 @@ class BriefAddClass(SuccessMessageMixin, CreateView):
 class BriefEditClass(SuccessMessageMixin, UpdateView):
     model = Brief
 
-    fields = ['nom', 'lien', 'nombre']
+    fields = ['nom', 'lien', 'nombre', 'date_debut', 'date_fin']
     template_name = "brief/brief_edit.html"
     
     success_message = "%(nom)s modifié avec succès!"
@@ -128,6 +128,3 @@ class BriefDeleteView(SuccessMessageMixin, DeleteView):
 def groupecreate(request, pk) :
     groupe_create(pk)
     return redirect('/brief/%d'% pk)
-
-
-

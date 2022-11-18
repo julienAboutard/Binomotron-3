@@ -4,10 +4,10 @@
   <link rel="stylesheet" href="{% static 'binomotron/style.css' %}">
   <head>
     <meta charset="utf-8" />
-    <title>Binomotron Apprenant</title>
+    <title>Binomotron liste des apprenants</title>
   </head>
   <body>
-    <p>Liste des Apprenants</p>
+    <p>Liste des apprenants</p>
     <form action=" {% url 'binomotron:apprenant'%}" method="post">
       {% csrf_token %}
       <input placeholder="nom" name="search">
@@ -28,7 +28,7 @@
         <li>
           <form >
             {% csrf_token %}
-            <a href="{% url 'binomotron:apprenant_detail' apprenant.id %}">{{ apprenant.nom }} {{ apprenant.prenom }}</a>
+            <a href="{% url 'binomotron:apprenant_detail' apprenant.id %}">{{ apprenant.prenom }} {{ apprenant.nom }}</a>
             <button class ='modif-btn' formaction="{% url 'binomotron:apprenant_edit' apprenant.id %}">Modifier</button>
             <button class = "delete-btn" formaction="{% url 'binomotron:supprimer-apprenant' apprenant.id%}">Supprimer</button>
           </form>

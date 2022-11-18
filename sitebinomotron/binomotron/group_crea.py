@@ -55,7 +55,3 @@ def groupe_create(brief_id):
         django_groupe.save()
         for i in group :
             django_groupe.apprenants.add(i)
-        
-
-
-
