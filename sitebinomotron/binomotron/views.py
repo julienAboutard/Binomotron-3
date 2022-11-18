@@ -14,10 +14,10 @@ def index(request) :
 
 def apprenantview(request) :
     if request.method == 'GET' :
-        apprenant_list = Apprenant.objects.all().order_by('nom')
+        apprenant_list = get_object_or_404(Apprenant.objects.all().order_by('nom'))
         return render(request, 'apprenant/apprenant.html', {'apprenant_list' : apprenant_list})
     elif request.method ==  'POST' :
-        apprenant_list = Apprenant.objects.all().filter(nom__icontains=request.POST.get('search'))
+        apprenant_list = get_object_or_404(Apprenant.objects.all().filter(nom__icontains=request.POST.get('search')))
         return render(request, 'apprenant/apprenant.html', {'apprenant_list' : apprenant_list})
 
 class ApprenantAddClass(SuccessMessageMixin, CreateView):
@@ -55,10 +55,10 @@ class ApprenantDeleteView(SuccessMessageMixin, DeleteView):
 
 def briefview(request) :
     if request.method == 'GET' :
-        brief_list = Brief.objects.all().order_by('nom')
+        brief_list = get_object_or_404(Brief.objects.all().order_by('nom'))
         return render(request, 'brief/brief.html', {'brief_list' : brief_list})
     elif request.method ==  'POST' :
-        brief_list = Brief.objects.all().filter(nom__icontains=request.POST.get('search'))
+        brief_list = get_object_or_404(Brief.objects.all().filter(nom__icontains=request.POST.get('search')))
         return render(request, 'brief/brief.html', {'brief_list' : brief_list})
 
 class BriefAddClass(SuccessMessageMixin, CreateView):
