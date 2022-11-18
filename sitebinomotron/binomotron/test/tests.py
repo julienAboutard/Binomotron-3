@@ -29,8 +29,8 @@ class ApprenantTestCase(TestCase) :
 
     def test_apprenant_exist(self) :
         # Vérifier que les apprenants créer dans le setUp() existent bien 
-        julien = get_object_or_404(Apprenant, pk=1)
-        audrey = get_object_or_404(Apprenant, pk=2)
+        julien = get_object_or_404(Apprenant, prenom='Julien')
+        audrey = get_object_or_404(Apprenant, prenom='Audrey')
 
         self.assertEqual(julien.nom, "Aboutard")
         self.assertEqual(julien.prenom, "Julien")
@@ -47,8 +47,8 @@ class BriefTestCase(TestCase) :
     
     def test_brief_exist(self) :
         # Vérifier que les Briefs créer dans le setUp() existent bien 
-        brief1 = get_object_or_404(Brief, pk=1)
-        brief2 = get_object_or_404(Brief, pk=2)
+        brief1 = get_object_or_404(Brief, nom='pouet')
+        brief2 = get_object_or_404(Brief, nom='essaie')
 
         self.assertEqual(brief1.lien, "http://pouet.co")
         self.assertEqual(brief1.nom, 'pouet')

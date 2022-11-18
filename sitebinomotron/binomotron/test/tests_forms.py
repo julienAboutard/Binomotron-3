@@ -63,43 +63,43 @@ class FormTest(TestCase):
         self.failUnlessEqual(status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    # def test_apprenant_add_post_nombre_negatif_view(self):
-    #     response = self.client.post(reverse('binomotron:brief_add'), data={
-    #         'nom': "pouet", 'lien': "pouet.co", 'nombre':-1
-    #     })
-    #     # print(response.content)
-    #     # self.assertInHTML('class="errorlist"', response.content)
-    #     self.assertContains(response, 'class="errorlist"')
-    #     self.failUnlessEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'brief/brief_add.html')
+    def test_apprenant_add_post_nombre_negatif_view(self):
+        response = self.client.post(reverse('binomotron:brief_add'), data={
+            'nom': "pouet", 'lien': "pouet.co", 'nombre':-1
+        })
+        # print(response.content)
+        # self.assertInHTML('class="errorlist"', response.content)
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    # def test_apprenant_add_post_nombre_nulle_view(self):
-    #     response = self.client.post(reverse('binomotron:brief_add'), data={
-    #         'nom': "pouet", 'lien': "pouet.co", 'nombre':0
-    #     })
-    #     # print(response.content)
-    #     self.assertContains(response, 'class="errorlist"')
-    #     self.failUnlessEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'brief/brief_add.html')
+    def test_apprenant_add_post_nombre_nulle_view(self):
+        response = self.client.post(reverse('binomotron:brief_add'), data={
+            'nom': "pouet", 'lien': "pouet.co", 'nombre':0
+        })
+        # print(response.content)
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    # def test_apprenant_add_post_nombre_inf_a_2_view(self):
-    #     response = self.client.post(reverse('binomotron:brief_add'), data={
-    #         'nom': "pouet", 'lien': "pouet.co", 'nombre':1
-    #     })
-    #     # print(response.content)
-    #     self.assertContains(response, 'class="errorlist"')
-    #     self.failUnlessEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'brief/brief_add.html')
+    def test_apprenant_add_post_nombre_inf_a_2_view(self):
+        response = self.client.post(reverse('binomotron:brief_add'), data={
+            'nom': "pouet", 'lien': "pouet.co", 'nombre':1
+        })
+        # print(response.content)
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_add.html')
 
 
-    # def test_apprenant_add_post_url_non_valide_view(self):
-    #     response = self.client.post(reverse('binomotron:brief_add'), data={
-    #         'nom': "pouet", 'lien': "pouet.co", 'nombre':1
-    #     })
-    #     # print(response.content)
-    #     self.assertContains(response, 'class="errorlist"')
-    #     self.failUnlessEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'brief/brief_add.html')
+    def test_apprenant_add_post_url_non_valide_view(self):
+        response = self.client.post(reverse('binomotron:brief_add'), data={
+            'nom': "pouet", 'lien': "pouet.co", 'nombre':1
+        })
+        # print(response.content)
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_add.html')
 
     def test_apprenant_add_post_chaine_trop_longue_non_valide_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
@@ -124,4 +124,4 @@ class FormTest(TestCase):
             'nom': "pouet", 'lien': "pouet.co", 'nombre':1
         })
         # check if brief exists in DB
-        self.failUnlessEqual(response.status_code, 302)
+        self.failUnlessEqual(response.status_code, 200)
