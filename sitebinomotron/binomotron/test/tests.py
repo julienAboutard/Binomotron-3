@@ -1,8 +1,8 @@
 import datetime
 
 from django.test import TestCase
-from .models import Apprenant, Brief, Groupe
-from .group_crea import groupe_create
+from ..models import Apprenant, Brief, Groupe
+from ..group_crea import groupe_create
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db import IntegrityError
