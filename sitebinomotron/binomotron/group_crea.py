@@ -1,13 +1,14 @@
 import random
 
 from .models import Apprenant, Brief, Groupe
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 
 
 def groupe_create(brief_id):
     # Récupération de l'ensembles des apprenants
-    students = list(Apprenant.objects.all())
-    brief_selec = Brief.objects.get(pk = brief_id) 
+    students = get_list_or_404(Apprenant)
+    brief_selec = get_object_or_404(Brief, pk = brief_id)
     
     res = []
     liste_groupes = []
@@ -51,7 +52,7 @@ def groupe_create(brief_id):
 
     for group in liste_groupes :  
         groupe_nom = '_'.join(x.prenom for x in group)
-        django_groupe = Groupe(nom = groupe_nom,  brief = brief_selec )
+        django_groupe = Groupe(nom = groupe_nom,  brief = brief_selec)
         django_groupe.save()
         for i in group :
             django_groupe.apprenants.add(i)
