@@ -1,11 +1,16 @@
-<!-- ici page de confirmation -->
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'binomotron/style.css' %}">
-
-
-<form method="post">{% csrf_token %}
-    <p>Êtes-vous sûr de vouloir supprimer "{{ object }} "?</p>
-    <input class = "back-btn" type="button" value="Annuler" onclick="history.back()"> 
-    <input class = "confirm-btn" type="submit" value="Confirmer">
-</form>
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Formulaire pour ajouter un apprenant</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'binomotron/style.css' %}">
+  </head>
+  <body>
+    <form method="post">{% csrf_token %}
+        <p>Êtes-vous sûr de vouloir supprimer "{{ object }} "?</p>
+        <input class = "back-btn" type="button" value="Annuler" onclick="history.back()"> 
+        <input class = "confirm-btn" type="submit" value="Confirmer">
+    </form>
+  </body>
+</html>

@@ -59,6 +59,7 @@ def groupe_create(brief_id):
                         id.append(index_res)
                         liste_groupes[index_res].append(res.pop())
 
+    # On crée les objets Groupes et on indique les objets Apprenants qui correspondent au groupe
     for group in liste_groupes :  
         groupe_nom = '_'.join(x.prenom for x in group)
         django_groupe = Groupe(nom = groupe_nom,  brief = brief_selec)
