@@ -2,10 +2,12 @@ from django.test import TestCase
 from django.urls import reverse
 from django.db.models import QuerySet
 import pprint
+import datetime
+
 
 from ..models import Brief, Groupe, Apprenant
 
-
+#### tests sur le mauvais renseignement de champs dans les formulaires
 
 class FormTest(TestCase):
 
@@ -50,7 +52,12 @@ class FormTest(TestCase):
         self.liaison9 = self.groupeD.apprenants.add(self.julien)
         self.liaison10 = self.groupeD.apprenants.add(self.vincent)
 
-    def test_apprenant_add_post_nombre_non_valide_view(self):
+
+######### FORMULAIRES BRIEF
+
+# tests formulaire de création de briefs
+
+    def test_brief_add_post_nombre_non_valide_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
             'nom': "pouet", 'lien': "http://pouet.co", 'nombre':"kqijf"
         })
@@ -63,65 +70,247 @@ class FormTest(TestCase):
         self.failUnlessEqual(status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    def test_apprenant_add_post_nombre_negatif_view(self):
+    def test_brief_add_post_nombre_negatif_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
-            'nom': "pouet", 'lien': "pouet.co", 'nombre':-1
+            'nom': "pouet", 'lien': "http://pouet.co", 'nombre':-1
         })
-        # print(response.content)
         # self.assertInHTML('class="errorlist"', response.content)
         self.assertContains(response, 'class="errorlist"')
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    def test_apprenant_add_post_nombre_nulle_view(self):
+    def test_brief_add_post_nombre_nulle_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
-            'nom': "pouet", 'lien': "pouet.co", 'nombre':0
+            'nom': "pouet", 'lien': "http://pouet.co", 'nombre':0
         })
-        # print(response.content)
         self.assertContains(response, 'class="errorlist"')
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    def test_apprenant_add_post_nombre_inf_a_2_view(self):
+    def test_brief_add_post_nombre_inf_a_2_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
-            'nom': "pouet", 'lien': "pouet.co", 'nombre':1
+            'nom': "pouet", 'lien': "http://pouet.co", 'nombre':1
         })
-        # print(response.content)
         self.assertContains(response, 'class="errorlist"')
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-
-    def test_apprenant_add_post_url_non_valide_view(self):
+    def test_brief_add_post_url_non_valide_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
-            'nom': "pouet", 'lien': "pouet.co", 'nombre':1
+            'nom': "pouet", 'lien': "pouet.co", 'nombre':2
         })
-        # print(response.content)
         self.assertContains(response, 'class="errorlist"')
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    def test_apprenant_add_post_chaine_trop_longue_non_valide_view(self):
+    def test_brief_add_post_chaine_trop_longue_non_valide_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
-            'nom': "ojvloneqmbvnqùeb nqùdnvf eqjvqkdjnfdbùqdnbjqùbqnv jfq qjfd nbùnfq !f !sjf !fsj kjfq kjs nfv n%SF ", 'lien': "http://pouet.co", 'nombre':"kqijf"
+            'nom': "ojvloneqmbvnqùeb nqùdnvf eqjvqkdjnfdbùqdnbjqùbqnv jfq qjfd nbùnfq !f !sjf !fsj kjfq kjs nfv n%SF ", 'lien': "http://pouet.co", 'nombre':2
         })
-        # print(response.content)
         self.assertContains(response, 'class="errorlist"')
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    def test_apprenant_add_post_chaine_trop_courte_non_valide_view(self):
+    def test_brief_add_post_chaine_trop_courte_non_valide_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
-            'nom': "", 'lien': "http://pouet.co", 'nombre':"kqijf"
+            'nom': "", 'lien': "http://pouet.co", 'nombre':2
         })
-        # print(response.content)
         self.assertContains(response, 'class="errorlist"')
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'brief/brief_add.html')
 
-    def test_apprenant_add_valide_post_view(self):
+    def test_brief_add_post_date_debut_passe_non_valide_view(self):
         response = self.client.post(reverse('binomotron:brief_add'), data={
-            'nom': "pouet", 'lien': "pouet.co", 'nombre':1
+            'nom': "YAB", 'lien': "http://pouet.co", 'nombre':2, 'date_debut':datetime.datetime(2022, 11, 18)
         })
-        # check if brief exists in DB
+        self.assertContains(response, 'class="errorlist')
         self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_add.html')
+
+    def test_brief_add_post_date_fin_passe_non_valide_view(self):
+        response = self.client.post(reverse('binomotron:brief_add'), data={
+            'nom': "YAB", 'lien': "http://pouet.co", 'nombre':2, 'date_fin':datetime.datetime(2022, 11, 18)
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_add.html')
+
+    def test_brief_add_post_date_debut_apres_date_fin_non_valide_view(self):
+        response = self.client.post(reverse('binomotron:brief_add'), data={
+            'nom': "YAB", 'lien': "http://pouet.co", 'nombre':2, 'date_debut':datetime.datetime(2022, 12, 23), 'date_fin':datetime.datetime(2022, 11, 21)
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_add.html')
+
+
+
+# tests formulaire de modification de briefs
+
+    def test_brief_edit_post_nombre_non_valide_view(self):
+        b = Brief.objects.get(nom="YAB")
+
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'nombre':"kqijf", 'ancien_nombre':b.nombre
+        })
+        status_code = response.status_code
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_nombre_negatif_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'nombre':-1, 'ancien_nombre':b.nombre
+        })
+        # self.assertInHTML('class="errorlist"', response.content)
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_nombre_nulle_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'nombre':0, 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_nombre_inf_a_2_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'nombre':1, 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_url_non_valide_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'lien': "pouet.co", 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_chaine_trop_longue_non_valide_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'nom': "ojvloneqmbvnqùeb nqùdnvf eqjvqkdjnfdbùqdnbjqùbqnv jfq qjfd nbùnfq !f !sjf !fsj kjfq kjs nfv n%SF ", 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_chaine_trop_courte_non_valide_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'nom': "", 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist"')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_date_debut_passe_non_valide_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'date_debut':datetime.datetime(2022, 11, 18), 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_date_fin_passe_non_valide_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'date_fin':datetime.datetime(2022, 11, 18), 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+    def test_brief_edit_post_date_debut_apres_date_fin_non_valide_view(self):
+        b = Brief.objects.get(nom="YAB")
+        response = self.client.post(reverse('binomotron:brief_edit', args=[b.pk]), data={
+            'date_debut':datetime.datetime(2022, 12, 23), 'date_fin':datetime.datetime(2022, 11, 21), 'ancien_nombre':b.nombre
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'brief/brief_edit.html')
+
+######### FORMULAIRES APPRENANTS
+
+# tests formulaire de création d'apprenants
+
+    def test_apprenant_add_post_prenom_vide_view(self):
+        response = self.client.post(reverse('binomotron:apprenant_add'), data={
+            'nom': "Paris", 'prenom':''
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_add.html')
+
+    def test_apprenant_add_prenom_trop_long_view(self):
+        response = self.client.post(reverse('binomotron:apprenant_add'), data={
+            'nom': "Paris", 'prenom':'ldesfnlnvlsknvksnvlsnvlsknvlksdnvlksdnvlksndvlksndlkvsndlkvsnlvknslkvnlkdsnvkdsnvlksnvlksdnvmksdnbmsknbmksnblkfdsnvlsnlkfdnblksnblksndlkfdskbnldwnblwdnblw!wnblw!wnwnlbdfwfdgfdgfdsvdnsldnvlknvlkqndlknvlqnvlkdnllwdkjvbkdjbvkjdbvkwjbvkwbkjvbkwbvkjwbkjb'
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_add.html')
+
+    def test_apprenant_add_post_nom_vide_view(self):
+        response = self.client.post(reverse('binomotron:apprenant_add'), data={
+            'nom': "", 'prenom':'Dorine'
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_add.html')
+
+    def test_apprenant_add_nom_trop_long_view(self):
+        response = self.client.post(reverse('binomotron:apprenant_add'), data={
+            'nom': "ldesfnlnvlsknvksnvlsnvlsknvlksdnvlksdnvlksndvlksndlkvsndlkvsnlvknslkvnlkdsnvkdsnvlksnvlksdnvmksdnbmsknbmksnblkfdsnvlsnlkfdnblksnblksndlkfdskbnldwnblwdnblw!wnblw!wnwnlbdfwfdgfdgfdsvdnsldnvlknvlkqndlknvlqnvlkdnllwdkjvbkdjbvkjdbvkwjbvkwbkjvbkwbvkjwbkjb", 'prenom':'Dorine'
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_add.html')
+
+# tests formulaire de modification d'apprenants
+
+    def test_apprenant_edit_post_prenom_vide_view(self):
+        a = Apprenant.objects.get(nom="Paris")
+
+        response = self.client.post(reverse('binomotron:apprenant_edit', args=[a.pk]), data={
+            'prenom':''
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_edit.html')
+
+    def test_apprenant_edit_prenom_trop_long_view(self):
+        a = Apprenant.objects.get(nom="Paris")
+        response = self.client.post(reverse('binomotron:apprenant_edit', args=[a.pk]), data={
+            'nom':'Paris', 'prenom':'ldesfnlnvlsknvksnvlsnvlsknvlksdnvlksdnvlksndvlksndlkvsndlkvsnlvknslkvnlkdsnvkdsnvlksnvlksdnvmksdnbmsknbmksnblkfdsnvlsnlkfdnblksnblksndlkfdskbnldwnblwdnblw!wnblw!wnwnlbdfwfdgfdgfdsvdnsldnvlknvlkqndlknvlqnvlkdnllwdkjvbkdjbvkjdbvkwjbvkwbkjvbkwbvkjwbkjb'
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_edit.html')
+
+    def test_apprenant_edit_post_prenom_vide_view(self):
+        a = Apprenant.objects.get(nom="Paris")
+        response = self.client.post(reverse('binomotron:apprenant_edit', args=[a.pk]), data={
+            'nom': ""
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_edit.html')
+    
+    def test_apprenant_edit_nom_trop_long_view(self):
+        a = Apprenant.objects.get(nom="Paris")
+        response = self.client.post(reverse('binomotron:apprenant_edit', args=[a.pk]), data={
+            'nom': "ldesfnlnvlsknvksnvlsnvlsknvlksdnvlksdnvlksndvlksndlkvsndlkvsnlvknslkvnlkdsnvkdsnvlksnvlksdnvmksdnbmsknbmksnblkfdsnvlsnlkfdnblksnblksndlkfdskbnldwnblwdnblw!wnblw!wnwnlbdfwfdgfdgfdsvdnsldnvlknvlkqndlknvlqnvlkdnllwdkjvbkdjbvkjdbvkwjbvkwbkjvbkwbvkjwbkjb", 'prenom':'Dorine'
+        })
+        self.assertContains(response, 'class="errorlist')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'apprenant/apprenant_edit.html')
