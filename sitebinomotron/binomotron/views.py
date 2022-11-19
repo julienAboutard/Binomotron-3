@@ -127,4 +127,4 @@ class BriefDeleteView(SuccessMessageMixin, DeleteView):
 
 def groupecreate(request, pk) :
     groupe_create(pk)
-    return redirect('/brief/%d'% pk)
+    return HttpResponseRedirect(reverse('binomotron:brief_detail', args=[pk]))
