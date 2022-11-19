@@ -68,7 +68,7 @@ class ViewTest(TestCase):
     
     # apprenant.html
     def test_apprenant_list_view(self):
-        print([b.id for b in Brief.objects.all()])
+        # print([b.id for b in Brief.objects.all()])
 
         response = self.client.get(reverse('binomotron:apprenant'))
         self.assertEqual(type(response.context.get('apprenant_list')), QuerySet)
@@ -84,11 +84,11 @@ class ViewTest(TestCase):
     # brief_detail.html
     def test_brief_detail_view(self):
         briefs = Brief.objects.all()
-        print(briefs)
-        print([b.id for b in briefs])
+        # print(briefs)
+        # print([b.id for b in briefs])
         b = Brief.objects.get(nom="YAB")
         response = self.client.get(reverse('binomotron:brief_detail', kwargs={'pk': b.id}))
-        pp = pprint.PrettyPrinter(indent=4)
+        # pp = pprint.PrettyPrinter(indent=4)
         # pp.pprint(response.context)
 
         # pris en charge par django

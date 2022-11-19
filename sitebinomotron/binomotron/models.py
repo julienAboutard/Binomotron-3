@@ -29,7 +29,8 @@ class Brief(models.Model):
     # Pour la taille des n-omes on accepte que des valeurs supérieurs ou égales à 2 
     nombre = models.PositiveIntegerField(default=2, validators = [MinValueValidator(2)])
     # Indique la date de début et de fin d'un brief 
-    date_debut = models.DateField(default=timezone.now, validators = [validate_datedebut])
+    # date_debut = models.DateField(default=timezone.now, validators = [validate_datedebut])
+    date_debut = models.DateField(default=timezone.now)
     date_fin = models.DateField(default=timezone.now)
 
     # Si la date de fin est antérieure à la date de début, raise ValidationError

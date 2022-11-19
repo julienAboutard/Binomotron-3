@@ -7,6 +7,9 @@
     <!-- <link rel="stylesheet" href="{% static '/style.css' %}"> -->
   </head>
   <body>
+    <header>
+      <a href="{% url 'binomotron:apprenant' %}">Apprenant</a>
+    </header>
     <h1>Modification d'un apprenant</h1>
     {% block content %}
       {% if form %}
@@ -17,7 +20,7 @@
       <form method="POST">
         {% csrf_token %}
         {{ form.as_p}}
-        <input type="submit" value="Update">
+        <input type="submit" value="Valider">
       </form>
     {% endblock content %}
   </body>

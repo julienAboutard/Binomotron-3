@@ -7,6 +7,9 @@
         <!-- <link rel="stylesheet" href="{% static '/style.css' %}"> -->
     </head>
     <body>
+        <header>
+            <a href="{% url 'binomotron:brief' %}">Brief</a>
+        </header>
         <h1>{{brief.nom}} </h1>
         <p> Lien vers le brief : {{brief.lien}} </p>
         <p> Date de début du projet : {{brief.date_debut}} </br>

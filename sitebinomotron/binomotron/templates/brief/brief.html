@@ -7,10 +7,13 @@
     <title>Binomotron, liste des briefs</title>
   </head>
   <body>
+    <header>
+      <a href="{% url 'binomotron:index' %}">Accueil</a>
+    </header>
     <p>Liste des briefs</p>
     <form action=" {% url 'binomotron:brief'%}" method="post">
       {% csrf_token %}
-      <input placeholder="nom" name="search">
+      <input type="search" pattern="[a-zA-Z]{1,200}" placeholder="nom" name="search">
       <button type="submit">Recherche</button>
     </form>
     <form><button class='add-btn' formaction="{% url 'binomotron:brief_add' %}">Ajouter</button></form>
