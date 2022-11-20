@@ -101,8 +101,8 @@ class BriefEditClass(SuccessMessageMixin, UpdateView):
     
     # On affiche seulement les champs nom, lien et nombre car le validateur sur les dates 
     # bloque l'envoie du formulaire si les dates sont antérieurs à la date du jour
-    # fields = ['nom', 'lien', 'nombre']
-    fields = ['nom', 'lien', 'nombre', 'date_debut', 'date_fin']
+    fields = ['nom', 'lien', 'nombre']
+    # fields = ['nom', 'lien', 'nombre', 'date_debut', 'date_fin']
     template_name = "brief/brief_edit.html"
     
     # On retourne un message de succès et une modification d'un brief réussie retourne sur la page affichant
