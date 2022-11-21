@@ -38,3 +38,9 @@ Il n'est pas possible de supprimer les groupes créés, par contre si l'on modif
 - fichier .gitignore  
 - README.md  
 - requirement.txt  (ensemble des packages pour faire tourner le projet)
+
+## Collaborateurs  
+- Audrey Costes
+- Dorine Paris  
+- Julien Aboutard  
+- Vincent Boettcher  
